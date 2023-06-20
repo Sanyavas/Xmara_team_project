@@ -1,0 +1,53 @@
+{% extends "users/base.html" %}
+
+{% block content %}
+<style>
+    td {font-weight:bold;}
+
+</style>
+
+
+<div class="text-center">
+    <a href="{% url 'contacts:main' %}" class="btn btn-primary" style="width: 24%">Home</a>
+    <a href="{% url 'contacts:contacts' %}" class="btn btn-primary" style="width: 24%">Add contact</a>
+    <a href="{% url 'contacts:sort' %}" class="btn btn-primary" style="width: 24%">Sort by name</a>
+    <a href="{% url 'contacts:birthday' %}" class="btn btn-primary" style="width: 24%">Birthday on this week</a>
+</div>
+
+<br>
+
+{% if contacts %}
+<h1 style="text-align:center;"><b> CONTACTS YOU MAY SEARCH </b></h1>
+<br/>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th style="background-color: #87CEEB;">Firstname</th>
+        <th style="background-color: #87CEEB;">Lastname</th>
+        <th style="background-color: #87CEEB;">Phone</th>
+        <th style="background-color: #87CEEB;">Email</th>
+        <th style="background-color: #87CEEB;">Birthday</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contacts %}
+    <tr>
+        <td>{{ contact.firstname }}</td>
+        <td>{{ contact.lastname }}</td>
+        <td><a href="tel:{{ contact.phone }}">{{ contact.phone }}</a></td>
+        <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
+        <td>{{ contact.birthday }}</td>
+        <td><a href="{% url 'contacts:edit' contact.id %}" class="btn btn-outline-info btn-sm">Update</a></td>
+        <td><a href="{% url 'contacts:delete_contact' contact.id %}" class="btn btn-outline-dark btn-sm">Delete</a>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h1>Contacts with "{{ searched }}" not found</h1>
+{% endif %}
+{% endblock %}
+
+
+
+
